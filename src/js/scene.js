@@ -12,7 +12,7 @@ scene.add(light);
 
 // Sizes
 const sizes = {
-    width: window.innerWidth * 0.65,
+    width: window.innerWidth * 0.85,
     height: window.innerHeight * 0.85
 };
 
@@ -41,8 +41,10 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 });
 renderer.setSize(sizes.width, sizes.height);
+
+
 // sets up the background color
-renderer.setClearColor(0x000000);
+renderer.setClearColor("#999999");
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 
