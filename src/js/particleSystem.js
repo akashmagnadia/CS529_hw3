@@ -1,28 +1,32 @@
-var data = [];
+const data = [];
 
 // bounds of the data
 const bounds = {};
 
-// create the containment box.
-// This cylinder is only to guide development.
-// TODO: Remove after the data has been rendered
-const createCylinder = () => {
-    // get the radius and height based on the data bounds
-    const radius = (bounds.maxX - bounds.minX) / 2.0 + 1;
-    const height = (bounds.maxY - bounds.minY) + 1;
-
-    // create a cylinder to contain the particle system
-    const geometry = new THREE.CylinderGeometry(radius, radius, height, 32);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffff00, wireframe: true });
-    const cylinder = new THREE.Mesh(geometry, material);
-
-    // add the containment to the scene
-    scene.add(cylinder);
-};
+let maxConcentration = -Infinity;
+let minConcentration = Infinity;
 
 // creates the particle system
 const createParticleSystem = (data) => {
-    // draw your particle system here!
+    const bufferGeometry = new THREE.BufferGeometry();
+    const pointPosition = []; // position of each of the points pushed as x y z
+
+    // push updates to the geometry to create points from given dots
+    for (let i = 0; i < data.length; i++) {
+        pointPosition.push(data[i].X);
+        pointPosition.push(data[i].Y);
+        pointPosition.push(data[i].Z);
+    }
+
+    // separate it by x, y and z
+    bufferGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( pointPosition, 3 ) );
+
+    // setting the size of each of the point to 0.01
+    const material = new THREE.PointsMaterial({ color: 0xffff00, size: 0.01 });
+    const points = new THREE.Points(bufferGeometry, material);
+
+    // add the containment to the scene
+    scene.add(points);
 };
 
 const loadData = (file) => {
@@ -42,28 +46,32 @@ const loadData = (file) => {
             bounds.maxY = Math.max(bounds.maxY || -Infinity, d.Points1);
             bounds.maxZ = Math.max(bounds.maxY || -Infinity, d.Points2);
 
+            // get min and max concentration
+            if (d.concentration > maxConcentration) {
+                maxConcentration = d.concentration;
+            }
+
+            if (d.concentration < minConcentration) {
+                minConcentration = d.concentration;
+            }
+
             // add the element to the data collection
             data.push({
                 // concentration density
                 concentration: Number(d.concentration),
                 // Position
                 X: Number(d.Points0),
-                Y: Number(d.Points1),
-                Z: Number(d.Points2),
+                Y: Number(d.Points2),
+                Z: Number(d.Points1),
                 // Velocity
                 U: Number(d.velocity0),
-                V: Number(d.velocity1),
-                W: Number(d.velocity2)
+                V: Number(d.velocity2),
+                W: Number(d.velocity1)
             })
         });
-        // draw the containment cylinder
-        // TODO: Remove after the data has been rendered
-        createCylinder()
         // create the particle system
-        // createParticleSystem(data);
+        createParticleSystem(data);
     })
-
-
 };
 
 
