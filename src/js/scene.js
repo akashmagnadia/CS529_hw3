@@ -1,57 +1,83 @@
 
 // Canvas
-const canvas = document.querySelector('canvas.scene');
+const leftCanvas = document.querySelector('canvas.leftScene');
+const rightCanvas = document.querySelector('canvas.rightScene');
 
 // Scene
-const scene = new THREE.Scene();
+const leftScene = new THREE.Scene();
+const rightScene = new THREE.Scene();
 
 // Lights
-const light = new THREE.DirectionalLight(0xffffff, 0.1);
-light.position.set(0,2,20);
-scene.add(light);
+const leftLight = new THREE.DirectionalLight("#ffffff", 0.1);
+leftLight.position.set(0,2,20);
+leftScene.add(leftLight);
+
+const rightLight = new THREE.DirectionalLight("#ffffff", 0.1);
+rightLight.position.set(0,2,20);
+rightScene.add(rightLight);
 
 // Sizes
 const sizes = {
-    width: window.innerWidth * 0.85,
-    height: window.innerHeight * 0.85
+    width: window.innerWidth * 0.45,
+    height: window.innerHeight * 0.9
 };
 
 window.addEventListener('resize', () =>
 {
+    // get the size of the window again
+    sizes.width = window.innerWidth * 0.45;
+    sizes.height = window.innerHeight * 0.9;
+
     // Update camera
-    camera.aspect = sizes.width / sizes.height
-    camera.updateProjectionMatrix()
+    leftCamera.aspect = sizes.width / sizes.height
+    leftCamera.updateProjectionMatrix()
+
+    rightCamera.aspect = sizes.width / sizes.height
+    rightCamera.updateProjectionMatrix()
 
     // Update renderer
-    renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    leftRenderer.setSize(sizes.width, sizes.height)
+    leftRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    rightRenderer.setSize(sizes.width, sizes.height)
+    rightRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 });
 
 
 // Camera setup
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000 );
-camera.position.set(0,2,20);
-camera.lookAt(0,0,0);
-scene.add(camera);
+const leftCamera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000 );
+leftCamera.position.set(0,2,20);
+leftCamera.lookAt(0, 0, 0);
+leftScene.add(leftCamera);
 
+const rightCamera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000 );
+rightCamera.position.set(0,2,20);
+rightCamera.lookAt(0, 0, 0);
+rightScene.add(rightCamera);
 
 
 //  Renderer
-const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
-});
-renderer.setSize(sizes.width, sizes.height);
+const leftRenderer = new THREE.WebGLRenderer({ canvas: leftCanvas });
+leftRenderer.setSize(sizes.width, sizes.height);
+
+const rightRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas });
+rightRenderer.setSize(sizes.width, sizes.height);
 
 
 // sets up the background color
-renderer.setClearColor("#999999");
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+let backgroundColor = "#eaeaea";
+leftRenderer.setClearColor(backgroundColor);
+leftRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+rightRenderer.setClearColor(backgroundColor);
+rightRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 
 // Animate
 const animate = () =>
 {
-    renderer.render(scene, camera);
+    leftRenderer.render(leftScene, leftCamera);
+    rightRenderer.render(rightScene, rightCamera);
 
     // Call animate for each frame
     window.requestAnimationFrame(animate);
