@@ -46,8 +46,7 @@ const loadData = (file) => {
         rightCamera.position.set((minX + maxX) / 2, (minY + maxY) / 2, 10);
         rightCamera.lookAt((minX + maxX) / 2, ((minY + maxY) / 2), 0);
 
-        // create the particle system that shows the cylinder
-        // createParticleSystemCylinder(data);
+        // create the particle system that shows the cylinder and the flat picture
         createParticleSystem(data, true, leftScene);
         createParticleSystem(data, false, rightScene);
     })
@@ -61,4 +60,15 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function updateTheAxis(shape) {
+    shape.rotation.set(
+        cylinderXAxis * (Math.PI/180),
+        cylinderYAxis * (Math.PI/180),
+        cylinderZAxis * (Math.PI/180)
+    )
+    console.log(cylinderXAxis);
+    console.log(cylinderYAxis);
+    console.log(cylinderZAxis);
 }

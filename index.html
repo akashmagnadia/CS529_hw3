@@ -12,11 +12,35 @@
 </head>
 
 <body>
-<canvas class="leftScene"></canvas>
-<canvas class="rightScene"></canvas>
+
+<div class="container">
+    <canvas class="leftScene"></canvas>
+    <canvas class="rightScene"></canvas>
+</div>
+
+<div class="container">
+    <label for="xAxis"
+           style="display: inline-block; width: 90px; text-align: right">
+        X-axis = <span id="xAxis-value">0</span>
+    </label>
+    <input type="range" min="0" max="360" id="xAxis" value="0">
+
+    <label for="yAxis"
+           style="display: inline-block; width: 90px; text-align: right">
+        Y-axis = <span id="yAxis-value">0</span>
+    </label>
+    <input type="range" min="0" max="360" id="yAxis" value="0">
+
+    <label for="zAxis"
+           style="display: inline-block; width: 90px; text-align: right">
+        Z-axis = <span id="zAxis-value">0</span>
+    </label>
+    <input type="range" min="0" max="360" id="zAxis" value="0">
+</div>
+
 <script src="src/js/utilities.js"></script>
 <script src="src/js/scene.js"></script>
 <script src="src/js/particleSystem.js"></script>
-</body>
 
+</body>
 </html>

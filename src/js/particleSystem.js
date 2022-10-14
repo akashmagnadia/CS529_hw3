@@ -12,6 +12,10 @@ let maxZ = -Infinity;
 const minConcentrationColor = "#ffffff";
 const maxConcentrationColor = "#d7191c";
 
+let cylinderXAxis = 0;
+let cylinderYAxis = 0;
+let cylinderZAxis = 0;
+
 loadData('data/058.csv');
 
 // get color and position for each point
@@ -47,15 +51,57 @@ const createParticleSystem = (data, isCylinder, scene) => {
     const {pointPosition, pointColor} = getPositionColor(data, isCylinder);
 
     // separate it by x, y and z
-    bufferGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( pointPosition, 3 ) );
+    bufferGeometry.setAttribute('position', new THREE.Float32BufferAttribute(pointPosition, 3));
 
     // set the color using r g b with range of 0 to 1
-    bufferGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( pointColor, 3 ) );
+    bufferGeometry.setAttribute('color', new THREE.Float32BufferAttribute(pointColor, 3));
 
     // setting the size of each of the point to 0.01
-    const material = new THREE.PointsMaterial({ size: 0.07, vertexColors: true });
+    const material = new THREE.PointsMaterial({size: 0.07, vertexColors: true});
     const points = new THREE.Points(bufferGeometry, material);
 
-    // add the containment to the scene
+    // add the points of the cylinder to the scene
     scene.add(points);
+
+    if (isCylinder) {
+        // rotate axis of the cylinder based on slider input
+        d3.select("#xAxis").on("input", function() {
+            cylinderXAxis = this.value;
+
+            // adjust the text on the range slider
+            d3.select("#xAxis-value").text(cylinderXAxis);
+            d3.select("#xAxis").property("value", cylinderXAxis);
+
+            updateTheAxis(points)
+        });
+
+        d3.select("#yAxis").on("input", function() {
+            cylinderYAxis = this.value;
+
+            // adjust the text on the range slider
+            d3.select("#yAxis-value").text(cylinderYAxis);
+            d3.select("#yAxis").property("value", cylinderYAxis);
+
+            updateTheAxis(points)
+        });
+
+        d3.select("#zAxis").on("input", function() {
+            cylinderZAxis = this.value;
+
+            // adjust the text on the range slider
+            d3.select("#zAxis-value").text(cylinderZAxis);
+            d3.select("#zAxis").property("value", cylinderZAxis);
+
+            updateTheAxis(points)
+        });
+    }
+
+    // TODO: make credit page first
+    // https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
+    // https://www.educative.io/answers/how-to-rotate-an-object-on-its-own-axis-in-threejs
+    // https://threejs.org/docs/
+    // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb hex to javascript
+    // https://bl.ocks.org/d3noob/d6a2860e176eb6b0849f133be3a8a12f
+    // https://www.educative.io/answers/how-to-rotate-an-object-on-its-own-axis-in-threejs
+    //
 };
