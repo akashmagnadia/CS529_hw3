@@ -125,14 +125,4 @@ const createParticleSystem = (data, isCylinder, scene, zLoc) => {
             moveTheRect(rectBoxGeometry, Number(this.value));
         });
     }
-
-    // TODO: make credit page first
-    // https://bl.ocks.org/johnwalley/e1d256b81e51da68f7feb632a53c3518
-    // https://www.educative.io/answers/how-to-rotate-an-object-on-its-own-axis-in-threejs
-    // https://threejs.org/docs/
-    // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb hex to javascript
-    // https://bl.ocks.org/d3noob/d6a2860e176eb6b0849f133be3a8a12f
-    // https://www.educative.io/answers/how-to-rotate-an-object-on-its-own-axis-in-threejs
-    // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range
-    //
 };
