@@ -68,7 +68,16 @@ function updateTheAxis(shape) {
         cylinderYAxis * (Math.PI/180),
         cylinderZAxis * (Math.PI/180)
     )
-    console.log(cylinderXAxis);
-    console.log(cylinderYAxis);
-    console.log(cylinderZAxis);
+}
+
+function moveTheRect(shape, zLoc) {
+    if (rectZLoc < zLoc) {
+        shape.translate(0, 0, Math.abs(rectZLoc - zLoc));
+    }
+
+    if (rectZLoc > zLoc) {
+        shape.translate(0, 0, -Math.abs(rectZLoc - zLoc));
+    }
+
+    rectZLoc = zLoc;
 }
