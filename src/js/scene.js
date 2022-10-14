@@ -65,7 +65,7 @@ rightRenderer.setSize(sizes.width, sizes.height);
 
 
 // sets up the background color
-let backgroundColor = "#eaeaea";
+let backgroundColor = "#949494";
 leftRenderer.setClearColor(backgroundColor);
 leftRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 

@@ -47,8 +47,8 @@ const loadData = (file) => {
         rightCamera.lookAt((minX + maxX) / 2, ((minY + maxY) / 2), 0);
 
         // create the particle system that shows the cylinder and the flat picture
-        createParticleSystem(data, true, leftScene);
-        createParticleSystem(data, false, rightScene);
+        createParticleSystem(data, true, leftScene, 0);
+        createParticleSystem(data, false, rightScene, 0);
     })
 };
 
@@ -70,6 +70,12 @@ function updateTheAxis(shape) {
     )
 }
 
+function clearScene(scene) {
+    while(scene.children.length > 0){
+        scene.remove(scene.children[0]);
+    }
+}
+
 function moveTheRect(shape, zLoc) {
     if (rectZLoc < zLoc) {
         shape.translate(0, 0, Math.abs(rectZLoc - zLoc));
@@ -80,4 +86,7 @@ function moveTheRect(shape, zLoc) {
     }
 
     rectZLoc = zLoc;
+
+    clearScene(rightScene);
+    createParticleSystem(data, false, rightScene, rectZLoc);
 }
